@@ -1,0 +1,17 @@
+F1 2020 to F1 2021 Modernization
+- Packet Header
+    - Done
+- Motion Packet
+- Session Packet
+- Lap Data Packet
+- Event Packet
+    - Event string codes? Is this new?
+- Participants Packet
+    - Does this show multiplayer names now?
+- Car Setups Packet
+- Car Telemetry Packet
+- Car Status Packet
+- Final Classification Packet
+- Lobby Info Packet
+- Car Damage Packet
+- Session History Packet
