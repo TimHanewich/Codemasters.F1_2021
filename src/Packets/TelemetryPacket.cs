@@ -7,7 +7,6 @@ namespace Codemasters.F1_2021
     public class TelemetryPacket : Packet
     {
         public CarTelemetryData[] FieldTelemetryData { get; set; }
-        public int ButtonStatus {get; set;}
         public byte MfdPanelIndex {get; set;} //New to f1 2020. This should be an enum, but will do that later.
         public byte SecondaryPlayerMfdPanelIndex {get; set;}
         public byte SuggestedGear {get; set;}
@@ -19,14 +18,11 @@ namespace Codemasters.F1_2021
 
             int t = 0;
             List<CarTelemetryData> TelDatas = new List<CarTelemetryData>();
-            for (t = 1; t <= 22; t++)
+            for (t = 0; t < 22; t++)
             {
-                TelDatas.Add(CarTelemetryData.Create(BAM.NextBytes(58)));
+                TelDatas.Add(CarTelemetryData.Create(BAM.NextBytes(60)));
             }
             FieldTelemetryData = TelDatas.ToArray();
-
-            //Button status
-            ButtonStatus = BitConverter.ToInt32(BAM.NextBytes(4), 0);
 
             //MFD Panel Index
             MfdPanelIndex = BAM.NextByte();
@@ -42,15 +38,15 @@ namespace Codemasters.F1_2021
         public class CarTelemetryData
         {
             public ushort SpeedKph { get; set; }
-            public ushort SpeedMph { get; set; }
             public float Throttle { get; set; }
             public float Steer { get; set; }
             public float Brake { get; set; }
-            public float Clutch { get; set; }
+            public byte Clutch { get; set; } //0 - 100
             public sbyte Gear { get; set; }
             public ushort EngineRpm { get; set; }
             public bool DrsActive { get; set; }
             public byte RevLightsPercentage { get; set; }
+            public ushort RevLightsBitValue {get; set;} //New to F1 2021. Not sure what this is.
             public WheelDataArray BrakeTemperature { get; set; }
             public WheelDataArray TyreSurfaceTemperature { get; set; }
             public WheelDataArray TyreInnerTemperature { get; set; }
@@ -69,8 +65,7 @@ namespace Codemasters.F1_2021
 
                 //Get speed
                 ReturnInstance.SpeedKph = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                double MPH = ReturnInstance.SpeedKph * 0.621371;
-                ReturnInstance.SpeedMph = (ushort)MPH;
+                
 
                 //Get throttle
                 ReturnInstance.Throttle = BitConverter.ToSingle(BAM.NextBytes(4), 0);
@@ -103,6 +98,9 @@ namespace Codemasters.F1_2021
 
                 //Get engine rev lights percentage
                 ReturnInstance.RevLightsPercentage = BAM.NextByte();
+
+                //Get engine rev lights bit value (?)
+                ReturnInstance.RevLightsBitValue = Convert.ToUInt16(BAM.NextBytes(2));
 
                 //get brake temperature
                 ReturnInstance.BrakeTemperature = new WheelDataArray();
@@ -144,6 +142,14 @@ namespace Codemasters.F1_2021
                 return ReturnInstance;
             }
 
+            public ushort SpeedMph
+            {
+                get
+                {
+                    double MPH = SpeedKph * 0.621371;
+                    return (ushort)MPH;
+                }
+            }
         }
     }
 
