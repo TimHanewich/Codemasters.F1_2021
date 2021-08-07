@@ -24,13 +24,13 @@ namespace Codemasters.F1_2021
             int t = 1;
             for (t = 0; t < 22; t++)
             {
-                LDs.Add(LapData.Create(BAM.NextBytes(53)));
+                LDs.Add(LapData.Create(BAM.NextBytes(43)));
             }
             FieldLapData = LDs.ToArray();
         }
 
         /// <summary>
-        /// 53 bytes long.
+        /// 43 bytes long.
         /// </summary>
         public class LapData
         {
