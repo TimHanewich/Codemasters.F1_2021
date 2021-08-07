@@ -29,6 +29,25 @@ namespace Codemasters.F1_2021
         public byte NumberOfWeatherForecastSamples {get; set;}
         public WeatherForecastSample[] WeatherForecastSamples {get; set;}
 
+        //Every property below is new to F1 2021
+        public ForecastAccuracy CurrentForecastAccuracy {get; set;}
+        public byte AIDifficulty {get; set;} //0 - 110
+        public uint SeasonLinkIdentifier {get; set;}
+        public uint WeekendLinkIdentifier {get; set;}
+        public uint SessionLinkIdentifier {get; set;}
+        public byte PitStopWindowIdealLap {get; set;}
+        public byte PitStopWindowLatestLap {get; set;}
+        public byte PitStopRejoinPosition {get; set;}
+        public bool SteeringAssist {get; set;}
+        public BrakingAssistLevel BrakingAssist {get; set;}
+        public GearBoxAssistLevel GearBoxAssist {get; set;}
+        public bool PitAssist {get; set;}
+        public bool PitReleaseAssist {get; set;}
+        public bool ErsAssist {get; set;}
+        public bool DrsAssist {get; set;}
+        public DynamicRacingLineAssistLevel DynamicRacingLine {get; set;}
+        public byte DynamicRacingLineType {get; set;} //0 = 2D, 1 = 3D
+
 
 
         public override void LoadBytes(byte[] bytes)
@@ -202,6 +221,32 @@ namespace Codemasters.F1_2021
             }
             WeatherForecastSamples = wfss.ToArray();
 
+            //Get forecast accuracy
+            CurrentForecastAccuracy = (ForecastAccuracy)BAM.NextByte();
+
+            //Get AI difficulty
+            AIDifficulty = BAM.NextByte();
+
+            //Get link identifiers
+            SeasonLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
+            WeekendLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
+            SessionLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
+
+            //Pit stop window parts
+            PitStopWindowIdealLap = BAM.NextByte();
+            PitStopWindowLatestLap = BAM.NextByte();
+            PitStopRejoinPosition = BAM.NextByte();
+
+            //Assists
+            SteeringAssist = Convert.ToBoolean(BAM.NextByte());
+            BrakingAssist = (BrakingAssistLevel)BAM.NextByte();
+            GearBoxAssist = (GearBoxAssistLevel)BAM.NextByte();
+            PitAssist = Convert.ToBoolean(BAM.NextByte());
+            PitReleaseAssist = Convert.ToBoolean(BAM.NextByte());
+            ErsAssist = Convert.ToBoolean(BAM.NextByte());
+            DrsAssist = Convert.ToBoolean(BAM.NextByte());
+            DynamicRacingLine = (DynamicRacingLineAssistLevel)BAM.NextByte();
+            DynamicRacingLineType = BAM.NextByte();
         }
 
 
@@ -248,7 +293,7 @@ namespace Codemasters.F1_2021
 
         }
 
-        public class WeatherForecastSample
+        public class WeatherForecastSample //8 bytes
         {
             public SessionType SessionTypeMode {get; set;}
             public byte TimeOffSet {get; set;}
@@ -411,6 +456,34 @@ namespace Codemasters.F1_2021
             Race = 10,
             Race2 = 11,
             TimeTrial = 12
+        }
+    
+        public enum ForecastAccuracy
+        {
+            Perfect = 0,
+            Approximate = 1
+        }
+    
+        public enum BrakingAssistLevel
+        {
+            Off = 0,
+            Low = 1,
+            Medium = 2,
+            High = 3
+        }
+
+        public enum GearBoxAssistLevel
+        {
+            Manual = 1,
+            ManualAndSuggested = 2,
+            High = 3
+        }
+
+        public enum DynamicRacingLineAssistLevel
+        {
+            Off = 0,
+            CornersOnly = 1,
+            Full = 2
         }
     }
 
