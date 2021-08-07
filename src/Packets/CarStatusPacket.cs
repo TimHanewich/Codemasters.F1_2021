@@ -16,9 +16,9 @@ namespace Codemasters.F1_2021
 
             List<CarStatusData> csds = new List<CarStatusData>();
             int t = 1;
-            for (t = 1; t <= 22; t++)
+            for (t = 0; t < 22; t++)
             {
-                csds.Add(CarStatusData.CreateFromBytes(bam.NextBytes(60)));
+                csds.Add(CarStatusData.CreateFromBytes(bam.NextBytes(47)));
             }
             FieldCarStatusData = csds.ToArray();
 
@@ -39,26 +39,19 @@ namespace Codemasters.F1_2021
             public byte MaxGears { get; set; }
             public bool DrsAllowed { get; set; }
             public ushort DrsActivationDistance {get; set;} //New in F1 2020
-            public WheelDataArray TyreWearPercentage { get; set; }
             public TyreCompound EquippedTyreCompound { get; set; }
             public byte EquippedVisualTyreCompoundId { get; set; }
             public byte TyreAgeLaps {get; set;} //New in F1 2020
-            public WheelDataArray TyreDamagePercentage { get; set; }
-            public byte FrontLeftWingDamagePercent { get; set; }
-            public byte FrontRightWingDamagePercent { get; set; }
-            public byte RearWingDamagePercent { get; set; }
-            public bool DrsFailure {get; set;} //New in F1 2020
-            public byte EngineDamagePercent { get; set; }
-            public byte GearBoxDamagePercent { get; set; }
             public FiaFlag VehicleFiaFlag { get; set; }
             public float ErsStoredEnergyJoules { get; set; }
             public ErsDeployMode SelectedErsDeployMode { get; set; }
             public float ErsHarvestedThisLapByMGUK { get; set; }
             public float ErsHarvestedThisLapByMGUH { get; set; }
             public float ErsDeployedThisLap { get; set; }
+            public bool NetworkPaused {get; set;}
 
             /// <summary>
-            /// Takes 56 bytes
+            /// Takes 47 bytes
             /// </summary>
             /// <param name="bytes"></param>
             /// <returns></returns>
@@ -163,13 +156,6 @@ namespace Codemasters.F1_2021
                 ToReturn.DrsActivationDistance = BitConverter.ToUInt16(bam.NextBytes(2), 0);
 
 
-                //Tyre Wear
-                ToReturn.TyreWearPercentage = new WheelDataArray();
-                ToReturn.TyreWearPercentage.FrontLeft = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreWearPercentage.FrontRight = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreWearPercentage.RearLeft = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreWearPercentage.RearRight = Convert.ToSingle(bam.NextByte());
-
                 //Tyre Compound
                 nb = bam.NextByte();
                 if (nb == 16)
@@ -206,39 +192,6 @@ namespace Codemasters.F1_2021
 
                 //Tyre age in laps
                 ToReturn.TyreAgeLaps = bam.NextByte();
-
-                //Tyre damage
-                ToReturn.TyreDamagePercentage = new WheelDataArray();
-                ToReturn.TyreDamagePercentage.FrontLeft = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreDamagePercentage.FrontRight = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreDamagePercentage.RearLeft = Convert.ToSingle(bam.NextByte());
-                ToReturn.TyreDamagePercentage.RearRight = Convert.ToSingle(bam.NextByte());
-
-                //Front left wing damage
-                ToReturn.FrontLeftWingDamagePercent = bam.NextByte();
-
-                //Front right wing damage
-                ToReturn.FrontRightWingDamagePercent = bam.NextByte();
-
-                //Rear wing damage
-                ToReturn.RearWingDamagePercent = bam.NextByte();
-
-                //DRS failure
-                nb = bam.NextByte();
-                if (nb == 0)
-                {
-                    ToReturn.DrsFailure = false;
-                }
-                else
-                {
-                    ToReturn.DrsFailure = true;
-                }
-
-                //Engine damage
-                ToReturn.EngineDamagePercent = bam.NextByte();
-
-                //Gear box damage
-                ToReturn.GearBoxDamagePercent = bam.NextByte();
 
                 //FIA Vehicle Flag
                 sbyte fiavf = Convert.ToSByte(bam.NextByte());
@@ -299,7 +252,8 @@ namespace Codemasters.F1_2021
                 //Ers deployed this lap
                 ToReturn.ErsDeployedThisLap = BitConverter.ToSingle(bam.NextBytes(4), 0);
 
-
+                //Network paused
+                ToReturn.NetworkPaused = Convert.ToBoolean(bam.NextByte());
 
                 return ToReturn;
             }
