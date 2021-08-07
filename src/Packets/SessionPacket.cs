@@ -80,58 +80,7 @@ namespace Codemasters.F1_2021
 
             //Get session type
             nb = BAM.NextByte();
-            if (nb == 0)
-            {
-                SessionTypeMode = SessionType.Unknown;
-            }
-            else if (nb == 1)
-            {
-                SessionTypeMode = SessionType.Practice1;
-            }
-            else if (nb == 2)
-            {
-                SessionTypeMode = SessionType.Practice2;
-            }
-            else if (nb == 3)
-            {
-                SessionTypeMode = SessionType.Practice3;
-            }
-            else if (nb == 4)
-            {
-                SessionTypeMode = SessionType.ShortPractice;
-            }
-            else if (nb == 5)
-            {
-                SessionTypeMode = SessionType.Qualifying1;
-            }
-            else if (nb == 6)
-            {
-                SessionTypeMode = SessionType.Qualifying2;
-            }
-            else if (nb == 7)
-            {
-                SessionTypeMode = SessionType.Qualifying3;
-            }
-            else if (nb == 8)
-            {
-                SessionTypeMode = SessionType.ShortPractice;
-            }
-            else if (nb == 9)
-            {
-                SessionTypeMode = SessionType.OneShotQualifying;
-            }
-            else if (nb == 10)
-            {
-                SessionTypeMode = SessionType.Race;
-            }
-            else if (nb == 11)
-            {
-                SessionTypeMode = SessionType.Race2;
-            }
-            else if (nb == 12)
-            {
-                SessionTypeMode = SessionType.TimeTrial;
-            }
+            SessionTypeMode = (SessionType)nb;
 
             //Get track
             SessionTrack = CodemastersToolkit.GetTrackFromTrackId(BAM.NextByte());
@@ -321,15 +270,15 @@ namespace Codemasters.F1_2021
                 }
                 else if (nb == 1)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Practice1;
+                    ToReturn.SessionTypeMode = SessionType.P1;
                 }
                 else if (nb == 2)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Practice2;
+                    ToReturn.SessionTypeMode = SessionType.P2;
                 }
                 else if (nb == 3)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Practice3;
+                    ToReturn.SessionTypeMode = SessionType.P3;
                 }
                 else if (nb == 4)
                 {
@@ -337,19 +286,19 @@ namespace Codemasters.F1_2021
                 }
                 else if (nb == 5)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Qualifying1;
+                    ToReturn.SessionTypeMode = SessionType.Q1;
                 }
                 else if (nb == 6)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Qualifying2;
+                    ToReturn.SessionTypeMode = SessionType.Q2;
                 }
                 else if (nb == 7)
                 {
-                    ToReturn.SessionTypeMode = SessionType.Qualifying3;
+                    ToReturn.SessionTypeMode = SessionType.Q3;
                 }
                 else if (nb == 8)
                 {
-                    ToReturn.SessionTypeMode = SessionType.ShortPractice;
+                    ToReturn.SessionTypeMode = SessionType.ShortQualifying;
                 }
                 else if (nb == 9)
                 {
