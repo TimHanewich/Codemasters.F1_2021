@@ -19,7 +19,7 @@ namespace Codemasters.F1_2021
 
 
 
-            //Get the next 20 data packages
+            //Get the next 22 data packages
             List<LapData> LDs = new List<LapData>();
             int t = 1;
             for (t = 0; t < 22; t++)
