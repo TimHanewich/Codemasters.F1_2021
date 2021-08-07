@@ -415,12 +415,12 @@ namespace Codemasters.F1_2021
 
         public enum WeatherCondition
         {
-            Clear,
-            LightClouds,
-            Overcast,
-            LightRain,
-            HeavyRain,
-            Storm
+            Clear = 0,
+            LightClouds = 1,
+            Overcast = 2,
+            LightRain = 3,
+            HeavyRain = 4,
+            Storm = 5
         }
 
         public enum SafetyCarStatus
