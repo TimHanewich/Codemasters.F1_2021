@@ -19,9 +19,9 @@ namespace Codemasters.F1_2021
 
             List<ParticipantData> PDs = new List<ParticipantData>();
             int t = 1;
-            for (t = 1; t <= 22; t++)
+            for (t = 0; t < 22; t++)
             {
-                PDs.Add(ParticipantData.Create(BAM.NextBytes(54)));
+                PDs.Add(ParticipantData.Create(BAM.NextBytes(56)));
             }
             FieldParticipantData = PDs.ToArray();
         }
@@ -30,7 +30,9 @@ namespace Codemasters.F1_2021
         {
             public bool IsAiControlled { get; set; }
             public Driver PilotingDriver { get; set; }
+            public byte NetworkId {get; set;} //New to F1 2021
             public Team ManufacturingTeam { get; set; }
+            public bool MyTeam {get; set;} //New to F1 2021. Indicates if it is their own team
             public byte CarRaceNumber { get; set; }
             public byte NationalityId { get; set; } //I'm too lazy to do this right now.  Will leave it as a byte ID for now... -Tim 1/26/2020
             public string Name { get; set; }
@@ -55,6 +57,9 @@ namespace Codemasters.F1_2021
 
                 //Get piloting driver
                 ReturnInstance.PilotingDriver = CodemastersToolkit.GetDriverFromDriverId(BAM.NextByte());
+
+                //Get NetworkId
+                ReturnInstance.NetworkId = BAM.NextByte();
 
                 //Get Team
                 ReturnInstance.ManufacturingTeam = CodemastersToolkit.GetTeamFromTeamId(BAM.NextByte());
