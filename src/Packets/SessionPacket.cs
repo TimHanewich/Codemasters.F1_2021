@@ -440,21 +440,20 @@ namespace Codemasters.F1_2021
 
         public enum SessionType
         {
-            Unknown,
-            Practice,
-            Qualifying,
-            Race,
-            Practice1,
-            Practice2,
-            Practice3,
-            ShortPractice,
-            Qualifying1,
-            Qualifying2,
-            Qualifying3,
-            ShortQualifying,
-            OneShotQualifying,
-            Race2,
-            TimeTrial
+            Unknown = 0,
+            P1 = 1,
+            P2 = 2,
+            P3 = 3,
+            ShortPractice = 4,
+            Q1 = 5,
+            Q2 = 6,
+            Q3 = 7,
+            ShortQualifying = 8,
+            OneShotQualifying = 9,
+            Race = 10,
+            Race2 = 11,
+            Race3 = 12,
+            TimeTrial = 13
         }
     }
 
