@@ -23,7 +23,7 @@ namespace Codemasters.F1_2021
             //Get Final Classification Data
             List<FinalClassificationData> fcdata = new List<FinalClassificationData>();
             int t = 0;
-            for (t=0;t<22;t++)
+            for (t=0; t < 22; t++)
             {
                 fcdata.Add(FinalClassificationData.Create(BAM.NextBytes(37)));
             }
@@ -39,7 +39,7 @@ namespace Codemasters.F1_2021
             public byte PointsScored {get; set;}
             public byte NumberOfPitStops {get; set;}
             public ResultStatus FinalResultStatus {get; set;}
-            public float BestLapTimeSeconds {get; set;}
+            public uint BestLapTimeMilliseconds {get; set;}
             public double TotalRaceTimeSeconds {get; set;}
             public byte PenaltiesTimeSeconds {get; set;}
             public byte NumberOfTyreStints {get; set;}
@@ -68,37 +68,10 @@ namespace Codemasters.F1_2021
 
                 //Result status
                 byte nb = BAM.NextByte();
-                if (nb == 0)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Invalid;
-                }
-                else if (nb == 1)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Inactive;
-                }
-                else if (nb == 2)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Active;
-                }
-                else if (nb == 3)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Finished;
-                }
-                else if (nb == 4)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Disqualified;
-                }
-                else if (nb == 5)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.NotClassified;
-                }
-                else if (nb == 6)
-                {
-                    ToReturn.FinalResultStatus = ResultStatus.Retired;
-                }
+                ToReturn.FinalResultStatus = (ResultStatus)nb;
 
-                //Best lap time in seconds
-                ToReturn.BestLapTimeSeconds = BitConverter.ToSingle(BAM.NextBytes(4), 0);
+                //Best lap time in milliseconds (uint32)
+                ToReturn.BestLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
 
                 //Total race time in seconds
                 ToReturn.TotalRaceTimeSeconds = BitConverter.ToDouble(BAM.NextBytes(8), 0);
@@ -112,17 +85,26 @@ namespace Codemasters.F1_2021
                 return ToReturn;
             }
 
+            public float BestLapTimeSeconds
+            {
+                get
+                {
+                    return Convert.ToSingle(BestLapTimeMilliseconds) / 1000f;
+                }
+            }
+
         }
 
         public enum ResultStatus
         {
-            Invalid,
-            Inactive,
-            Active,
-            Finished,
-            Disqualified,
-            NotClassified,
-            Retired
+            Invalid = 0,
+            Inactive = 1,
+            Active = 2,
+            Finished = 3,
+            DidNotFinish = 4,
+            Disqualified = 5,
+            NotClassified = 6,
+            Retired = 7
         }
     }
 
