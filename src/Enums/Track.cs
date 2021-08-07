@@ -30,6 +30,9 @@ namespace Codemasters.F1_2021
         TexasShort = 23,
         SuzukaShort = 24,
         Hanoi = 25,
-        Zandvoort = 26
+        Zandvoort = 26,
+        Imola = 27, //New to F1 2021
+        Portimao = 28, //New to F1 2021
+        Jeddah = 29 //New to F1 2021
     }
 }
