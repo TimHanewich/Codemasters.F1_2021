@@ -546,66 +546,37 @@ namespace Codemasters.F1_2021
 
             public static string GetSessionTypeFriendlyName(SessionPacket.SessionType session_type)
             {
-                string ToReturn = session_type.ToString();
-
-                if (session_type == SessionPacket.SessionType.Practice)
+                switch (session_type)
                 {
-                    ToReturn = "Practice";
+                    case SessionPacket.SessionType.Unknown:
+                        return "Unknown";
+                    case SessionPacket.SessionType.P1:
+                        return "Practice 1";
+                    case SessionPacket.SessionType.P2:
+                        return "Practice 2";
+                    case SessionPacket.SessionType.P3:
+                        return "Practice 3";
+                    case SessionPacket.SessionType.ShortPractice:
+                        return "Short Practice";
+                    case SessionPacket.SessionType.Q1:
+                        return "Qualifying 1";
+                    case SessionPacket.SessionType.Q2:
+                        return "Qualifying 2";
+                    case SessionPacket.SessionType.Q3:
+                        return "Qualifying 3";
+                    case SessionPacket.SessionType.ShortQualifying:
+                        return "Short Qualifying";
+                    case SessionPacket.SessionType.OneShotQualifying:
+                        return "One Shot Qualifying";
+                    case SessionPacket.SessionType.Race:
+                        return "Race";
+                    case SessionPacket.SessionType.Race2:
+                        return "Race 2";
+                    case SessionPacket.SessionType.TimeTrial:
+                        return "Time Trial";
+                    default:
+                        return "Unknown Session (" + session_type.ToString() + ")";
                 }
-                else if (session_type == SessionPacket.SessionType.Qualifying)
-                {
-                    ToReturn = "Qualifying";
-                }
-                else if (session_type == SessionPacket.SessionType.Race)
-                {
-                    ToReturn = "Race";
-                }
-                else if (session_type == SessionPacket.SessionType.Practice1)
-                {
-                    ToReturn = "Practice 1";
-                }
-                else if (session_type == SessionPacket.SessionType.Practice2)
-                {
-                    ToReturn = "Practice 2";
-                }
-                else if (session_type == SessionPacket.SessionType.Practice3)
-                {
-                    ToReturn = "Practice 3";
-                }
-                else if (session_type == SessionPacket.SessionType.ShortPractice)
-                {
-                    ToReturn = "Short Practice";
-                }
-                else if (session_type == SessionPacket.SessionType.Qualifying1)
-                {
-                    ToReturn = "Qualifying 1";
-                }
-                else if (session_type == SessionPacket.SessionType.Qualifying2)
-                {
-                    ToReturn = "Qualifying 2";
-                }
-                else if (session_type == SessionPacket.SessionType.Qualifying3)
-                {
-                    ToReturn = "Qualifying 3";
-                }
-                else if (session_type == SessionPacket.SessionType.ShortQualifying)
-                {
-                    ToReturn = "Short Qualifying";
-                }
-                else if (session_type == SessionPacket.SessionType.OneShotQualifying)
-                {
-                    ToReturn = "One-Shot Qualifying";
-                }
-                else if (session_type == SessionPacket.SessionType.Race2)
-                {
-                    ToReturn = "Race #2";
-                }
-                else if (session_type == SessionPacket.SessionType.TimeTrial)
-                {
-                    ToReturn = "Time Trial";
-                }
-
-                return ToReturn;
             }
 
             public static string GetTeamFriendlyName(Team t)
