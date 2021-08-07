@@ -177,75 +177,7 @@ namespace Codemasters.F1_2021
 
             public static Team GetTeamFromTeamId(byte id)
             {
-                Dictionary<byte, Team> Dict = new Dictionary<byte, Team>();
-
-                Dict.Add(0, Team.Mercedes);
-                Dict.Add(1, Team.Ferrari);
-                Dict.Add(2, Team.RedBullRacing);
-                Dict.Add(3, Team.Williams);
-                Dict.Add(4, Team.RacingPoint);
-                Dict.Add(5, Team.Renault);
-                Dict.Add(6, Team.AlphaTauri);
-                Dict.Add(7, Team.Haas);
-                Dict.Add(8, Team.McLaren);
-                Dict.Add(9, Team.AlfaRomeo);
-                Dict.Add(10, Team.McLaren1988);
-                Dict.Add(11, Team.McLaren1991);
-                Dict.Add(12, Team.Williams1992);
-                Dict.Add(13, Team.Ferrari1995);
-                Dict.Add(14, Team.Williams1996);
-                Dict.Add(15, Team.McLaren1998);
-                Dict.Add(16, Team.Ferrari2002);
-                Dict.Add(17, Team.Ferrari2004);
-                Dict.Add(18, Team.Renault2006);
-                Dict.Add(19, Team.Ferrari2007);
-                Dict.Add(20, Team.McLaren2008);
-                Dict.Add(21, Team.RedBull2010);
-                Dict.Add(22, Team.Ferrari1976);
-                Dict.Add(23, Team.ARTGrandPrix);
-                Dict.Add(24, Team.CamposVexatecRacing);
-                Dict.Add(25, Team.Carlin);
-                Dict.Add(26, Team.CharouzRacingSystem);
-                Dict.Add(27, Team.DAMS);
-                Dict.Add(28, Team.RussianTime);
-                Dict.Add(29, Team.MPMotorsport);
-                Dict.Add(30, Team.Pertamina);
-                Dict.Add(31, Team.McLaren1990);
-                Dict.Add(32, Team.Trident);
-                Dict.Add(33, Team.BWTArden);
-                Dict.Add(34, Team.McLaren1976);
-                Dict.Add(35, Team.Lotus1972);
-                Dict.Add(36, Team.Ferrari1979);
-                Dict.Add(37, Team.McLaren1982);
-                Dict.Add(38, Team.Williams2003);
-                Dict.Add(39, Team.Brawn2009);
-                Dict.Add(40, Team.Lotus1978);
-                Dict.Add(41, Team.F1GenericCar);
-                Dict.Add(42, Team.ArtGP19);
-                Dict.Add(43, Team.Campos19);
-                Dict.Add(44, Team.Carlin19);
-                Dict.Add(45, Team.SauberJuniorCharouz19);
-                Dict.Add(46, Team.Dams19);
-                Dict.Add(47, Team.UniVirtuosi19);
-                Dict.Add(48, Team.MPMotorsport19);
-                Dict.Add(49, Team.Prema19);
-                Dict.Add(50, Team.Trident19);
-                Dict.Add(51, Team.Arden19);
-                Dict.Add(53, Team.Benetton1994);
-                Dict.Add(55, Team.Ferrari2000);
-                Dict.Add(56, Team.Jordan1991);
-                Dict.Add(255, Team.MyTeam);
-
-                Team tr = Team.MyTeam;
-                foreach (KeyValuePair<byte, Team> kvp in Dict)
-                {
-                    if (kvp.Key == id)
-                    {
-                        tr = kvp.Value;
-                    }
-                }
-
-                return tr;
+                return (Team)id;
             }
 
             public static SurfaceType GetSurfaceTypeFromSurfaceTypeId(byte id)
@@ -316,23 +248,23 @@ namespace Codemasters.F1_2021
                 }
                 else if (t == Team.Haas)
                 {
-                    c = Color.FromArgb(255, 120, 120, 120);
+                    c = Color.FromArgb(255, 255, 255, 255);
                 }
                 else if (t == Team.McLaren)
                 {
-                    c = Color.FromArgb(255, 255, 135, 0);
+                    c = Color.FromArgb(255, 255, 152, 0);
                 }
                 else if (t == Team.AlfaRomeo)
                 {
-                    c = Color.FromArgb(255, 155, 0, 0);
+                    c = Color.FromArgb(255, 144, 0, 0);
                 }
                 else if (t == Team.RedBullRacing)
                 {
                     c = Color.FromArgb(255, 6, 0, 239);
                 }
-                else if (t == Team.Renault)
+                else if (t == Team.Alpine)
                 {
-                    c = Color.FromArgb(255, 255, 245, 0);
+                    c = Color.FromArgb(255, 0, 144, 255);
                 }
                 else if (t == Team.Ferrari)
                 {
@@ -340,15 +272,15 @@ namespace Codemasters.F1_2021
                 }
                 else if (t == Team.AlphaTauri)
                 {
-                    c = Color.FromArgb(255, 255, 255, 255);
+                    c = Color.FromArgb(255, 43, 69, 98);
                 }
                 else if (t == Team.Williams)
                 {
-                    c = Color.FromArgb(255, 0, 130, 250);
+                    c = Color.FromArgb(255, 0, 90, 255);
                 }
-                else if (t == Team.RacingPoint)
+                else if (t == Team.AstonMartin)
                 {
-                    c = Color.FromArgb(255, 245, 150, 200);
+                    c = Color.FromArgb(255, 0, 111, 98);
                 }
 
                 return c;
@@ -475,43 +407,43 @@ namespace Codemasters.F1_2021
 
                 if (t == Team.Mercedes)
                 {
-                    ToReturn = "W11";
+                    ToReturn = "W12";
                 }
                 else if (t == Team.RedBullRacing)
                 {
-                    ToReturn = "RB16";
+                    ToReturn = "RB16B";
                 }
                 else if (t == Team.McLaren)
                 {
-                    ToReturn = "MCL35";
+                    ToReturn = "MCL35M";
                 }
                 else if (t == Team.Ferrari)
                 {
-                    ToReturn = "SF1000";
+                    ToReturn = "SF21";
                 }
-                else if (t == Team.RacingPoint)
+                else if (t == Team.AstonMartin)
                 {
-                    ToReturn = "RP20";
+                    ToReturn = "AMR21";
                 }
-                else if (t == Team.Renault)
+                else if (t == Team.Alpine)
                 {
-                    ToReturn = "R.S.20";
+                    ToReturn = "A521";
                 }
                 else if (t == Team.AlphaTauri)
                 {
-                    ToReturn = "AT01";
+                    ToReturn = "AT02";
                 }
                 else if (t == Team.AlfaRomeo)
                 {
-                    ToReturn = "C39";
+                    ToReturn = "C41";
                 }
                 else if (t == Team.Haas)
                 {
-                    ToReturn = "VF-20";
+                    ToReturn = "VF-21";
                 }
                 else if (t == Team.Williams)
                 {
-                    ToReturn = "FW43";
+                    ToReturn = "FW43B";
                 }
 
                 return ToReturn;
@@ -807,17 +739,17 @@ namespace Codemasters.F1_2021
                 {
                     ToReturn = "McLaren";
                 }
-                else if (t == Team.Renault)
+                else if (t == Team.Alpine)
                 {
-                    ToReturn = "Renault";
+                    ToReturn = "Alpine";
                 }
                 else if (t == Team.AlphaTauri)
                 {
                     ToReturn = "Alpha Tauri";
                 }
-                else if (t == Team.RacingPoint)
+                else if (t == Team.AstonMartin)
                 {
-                    ToReturn = "Racing Point";
+                    ToReturn = "Aston Martin";
                 }
                 else if (t == Team.AlfaRomeo)
                 {
