@@ -401,8 +401,7 @@ namespace Codemasters.F1_2021
             OneShotQualifying = 9,
             Race = 10,
             Race2 = 11,
-            Race3 = 12,
-            TimeTrial = 13
+            TimeTrial = 12
         }
     }
 
