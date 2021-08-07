@@ -13,6 +13,8 @@ namespace Codemasters.F1_2021
         CarTelemetry = 6, //1307 bytes
         CarStatus = 7, //1344 bytes
         FinalClassification = 8, //839 bytes    New to F1 2020.
-        LobbyInfo = 9 //1169 bytes   New to F1 2020
+        LobbyInfo = 9, //1169 bytes   New to F1 2020,
+        CarDamage = 10, //New to F1 2021
+        SessionHistory = 11 //New to F1 2021
     }
 }
