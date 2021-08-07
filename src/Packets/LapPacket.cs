@@ -22,7 +22,7 @@ namespace Codemasters.F1_2021
             //Get the next 20 data packages
             List<LapData> LDs = new List<LapData>();
             int t = 1;
-            for (t = 1; t <= 22; t++)
+            for (t = 0; t < 22; t++)
             {
                 LDs.Add(LapData.Create(BAM.NextBytes(53)));
             }
@@ -37,18 +37,7 @@ namespace Codemasters.F1_2021
             public float LastLapTime { get; set; }
             public float CurrentLapTime { get; set; }
             public ushort Sector1TimeMilliseconds { get; set; }
-            public ushort Sector2TimeMilliseconds { get; set; }
-            public float BestLapTimeSeconds { get; set; }
-            public byte BestLapNumber {get; set;}
-            public ushort BestLapSector1TimeMilliseconds {get; set;}
-            public ushort BestLapSector2TimeMilliseconds {get; set;}
-            public ushort BestLapSector3TimeMilliseconds {get; set;}
-            public ushort BestOverallSector1TimeMilliseconds {get; set;}
-            public byte BestOverallSector1TimeLapNumber {get; set;}
-            public ushort BestOverallSector2TimeMilliseconds {get; set;}
-            public byte BestOverallSector2TimeLapNumber {get; set;}
-            public ushort BestOverallSector3TimeMilliseconds {get; set;}
-            public byte BestOverallSector3TimeLapNumber {get; set;}          
+            public ushort Sector2TimeMilliseconds { get; set; }        
             public float LapDistance { get; set; }
             public float TotalDistance { get; set; }
             public float SafetyCarDelta { get; set; }
@@ -57,10 +46,17 @@ namespace Codemasters.F1_2021
             public PitStatus CurrentPitStatus { get; set; }
             public byte Sector { get; set; }
             public bool CurrentLapInvalid { get; set; }
-            public byte Penalties { get; set; }
+            public byte Penalties {get; set;}
+            public byte Warnings {get; set;} //Number of warnings that have been accumulated
+            public byte UnservedDriveThroughPenalties {get; set;} //Number of unserved drive through penalties (still have to serve)
+            public byte UnservedStopAndGoPenalties {get; set;}
             public byte StartingGridPosition { get; set; }
             public DriverStatus CurrentDriverStatus { get; set; }
             public ResultStatus FinalResultStatus { get; set; }
+            public bool PitLaneTimerActive {get; set;}
+            public ushort TimeInPitLaneMilliseconds {get; set;} //If in the pitlane, the number of milliseconds you have spent in there.
+            public ushort PitStopTimerMilliseconds {get; set;}
+            public bool ShouldServePenaltyDuringPitStop {get; set;}
 
             public static LapData Create(byte[] bytes)
             {
@@ -73,21 +69,6 @@ namespace Codemasters.F1_2021
                 ReturnInstance.Sector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
                 ReturnInstance.Sector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
 
-
-                ReturnInstance.BestLapTimeSeconds = BitConverter.ToSingle(BAM.NextBytes(4), 0);
-                ReturnInstance.BestLapNumber = BAM.NextByte();
-
-                ReturnInstance.BestLapSector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                ReturnInstance.BestLapSector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                ReturnInstance.BestLapSector3TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-
-                ReturnInstance.BestOverallSector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                ReturnInstance.BestOverallSector1TimeLapNumber = BAM.NextByte();
-                ReturnInstance.BestOverallSector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                ReturnInstance.BestOverallSector2TimeLapNumber = BAM.NextByte();
-                ReturnInstance.BestOverallSector3TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
-                ReturnInstance.BestOverallSector3TimeLapNumber = BAM.NextByte();
-
                 ReturnInstance.LapDistance = BitConverter.ToSingle(BAM.NextBytes(4), 0);
                 ReturnInstance.TotalDistance = BitConverter.ToSingle(BAM.NextBytes(4), 0);
                 ReturnInstance.SafetyCarDelta = BitConverter.ToSingle(BAM.NextBytes(4), 0);
@@ -96,18 +77,7 @@ namespace Codemasters.F1_2021
 
                 //Get pit status
                 byte nb = BAM.NextByte();
-                if (nb == 0)
-                {
-                    ReturnInstance.CurrentPitStatus = PitStatus.OnTrack;
-                }
-                else if (nb == 1)
-                {
-                    ReturnInstance.CurrentPitStatus = PitStatus.PitLane;
-                }
-                else if (nb == 2)
-                {
-                    ReturnInstance.CurrentPitStatus = PitStatus.PitArea;
-                }
+                ReturnInstance.CurrentPitStatus = (PitStatus)nb;
 
                 //Get sector
                 ReturnInstance.Sector = System.Convert.ToByte(BAM.NextByte() + 1);
@@ -126,63 +96,26 @@ namespace Codemasters.F1_2021
                 //Get penalties
                 ReturnInstance.Penalties = BAM.NextByte();
 
+                //Warnings
+                ReturnInstance.Warnings = BAM.NextByte();
+
+                //Number of unserved drive through penalties
+                ReturnInstance.UnservedDriveThroughPenalties = BAM.NextByte();
+
+                //Number of unserved stop & go penalties
+                ReturnInstance.UnservedStopAndGoPenalties = BAM.NextByte();
+
                 //Get grid position
                 ReturnInstance.StartingGridPosition = BAM.NextByte();
 
                 //Get driver status
                 nb = BAM.NextByte();
-                if (nb == 0)
-                {
-                    ReturnInstance.CurrentDriverStatus = DriverStatus.InGarage;
-                }
-                else if (nb == 1)
-                {
-                    ReturnInstance.CurrentDriverStatus = DriverStatus.FlyingLap;
-                }
-                else if (nb == 2)
-                {
-                    ReturnInstance.CurrentDriverStatus = DriverStatus.InLap;
-                }
-                else if (nb == 3)
-                {
-                    ReturnInstance.CurrentDriverStatus = DriverStatus.OutLap;
-                }
-                else if (nb == 4)
-                {
-                    ReturnInstance.CurrentDriverStatus = DriverStatus.OnTrack;
-                }
+                ReturnInstance.CurrentDriverStatus = (DriverStatus)nb;
 
 
                 //Get result status
                 nb = BAM.NextByte();
-                if (nb == 0)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Invalid;
-                }
-                else if (nb == 1)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Inactive;
-                }
-                else if (nb == 2)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Active;
-                }
-                else if (nb == 3)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Finished;
-                }
-                else if (nb == 4)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Disqualified;
-                }
-                else if (nb == 5)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.NotClassified;
-                }
-                else if (nb == 6)
-                {
-                    ReturnInstance.FinalResultStatus = ResultStatus.Retired;
-                }
+                ReturnInstance.FinalResultStatus = (ResultStatus)nb;
 
                 return ReturnInstance;
             }
@@ -191,22 +124,23 @@ namespace Codemasters.F1_2021
 
         public enum DriverStatus
         {
-            InGarage,
-            FlyingLap,
-            InLap,
-            OutLap,
-            OnTrack
+            InGarage = 0,
+            FlyingLap = 1,
+            InLap = 2,
+            OutLap = 3,
+            OnTrack = 4
         }
 
         public enum ResultStatus
         {
-            Invalid,
-            Inactive,
-            Active,
-            Finished,
-            Disqualified,
-            NotClassified,
-            Retired
+            Invalid = 0,
+            Inactive = 1,
+            Active = 2,
+            Finished = 3,
+            DidNotFinish = 4,
+            Disqualified = 5,
+            NotClassified = 6,
+            Retired = 7
         }
 
 
