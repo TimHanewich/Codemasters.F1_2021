@@ -254,7 +254,10 @@ namespace Codemasters.F1_2021
             public byte TimeOffSet {get; set;}
             public WeatherCondition ForecastedWeatherCondition {get; set;}
             public byte TrackTemperatureCelsius {get; set;}
+            public byte TrackTemperatureChange {get; set;} //0 = up, 1 = down, 2 = no change
             public byte AirTemperatureCelsius {get; set;}
+            public byte AirTemperatureChange {get; set;} //0 = up, 1 = down, 2 = no change
+            public byte RainPercentage {get; set;}
 
 
             public static WeatherForecastSample Create(byte[] bytes)
@@ -348,14 +351,20 @@ namespace Codemasters.F1_2021
                     ToReturn.ForecastedWeatherCondition = WeatherCondition.Storm;
                 }
 
-
                 //Get track temperature
                 ToReturn.TrackTemperatureCelsius = BAM.NextByte();
+
+                //Track temperature change
+                ToReturn.TrackTemperatureChange = BAM.NextByte();
 
                 //Get air temperature
                 ToReturn.AirTemperatureCelsius = BAM.NextByte();
 
+                //Air temperature change
+                ToReturn.AirTemperatureChange = BAM.NextByte();
 
+                //rain percentage
+                ToReturn.RainPercentage = BAM.NextByte();
 
                 return ToReturn;
             }
