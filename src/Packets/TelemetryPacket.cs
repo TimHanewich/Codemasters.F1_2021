@@ -100,7 +100,7 @@ namespace Codemasters.F1_2021
                 ReturnInstance.RevLightsPercentage = BAM.NextByte();
 
                 //Get engine rev lights bit value (?)
-                ReturnInstance.RevLightsBitValue = Convert.ToUInt16(BAM.NextBytes(2));
+                ReturnInstance.RevLightsBitValue = BitConverter.ToUInt16(BAM.NextBytes(2));
 
                 //get brake temperature
                 ReturnInstance.BrakeTemperature = new WheelDataArray();
