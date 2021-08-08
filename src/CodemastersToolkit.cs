@@ -58,7 +58,7 @@ namespace Codemasters.F1_2021
                 }
                 else
                 {
-                    throw new Exception("Packet type not recognized.");
+                    throw new Exception("Packet type with length " + bytes.Length.ToString("#,##0") + " not recognized.");
                 }
             }
 
