@@ -12,19 +12,19 @@ namespace Codemasters.F1_2021
                 {
                     return PacketType.Motion;
                 }
-                else if (bytes.Length == 251)
+                else if (bytes.Length == 625)
                 {
                     return PacketType.Session;
                 }
-                else if (bytes.Length == 1190)
+                else if (bytes.Length == 970)
                 {
                     return PacketType.Lap;
                 }
-                else if (bytes.Length == 35)
+                else if (bytes.Length == 36)
                 {
                     return PacketType.Event;
                 }
-                else if (bytes.Length == 1213)
+                else if (bytes.Length == 1257)
                 {
                     return PacketType.Participants;
                 }
@@ -32,11 +32,11 @@ namespace Codemasters.F1_2021
                 {
                     return PacketType.CarSetup;
                 }
-                else if (bytes.Length == 1307)
+                else if (bytes.Length == 1347)
                 {
                     return PacketType.CarTelemetry;
                 }
-                else if (bytes.Length == 1344)
+                else if (bytes.Length == 1058)
                 {
                     return PacketType.CarStatus;
                 }
@@ -44,9 +44,17 @@ namespace Codemasters.F1_2021
                 {
                     return PacketType.FinalClassification;
                 }
-                else if (bytes.Length == 1169)
+                else if (bytes.Length == 1191)
                 {
                     return PacketType.LobbyInfo;
+                }
+                else if (bytes.Length == 882)
+                {
+                    return PacketType.CarDamage;
+                }
+                else if (bytes.Length == 1155)
+                {
+                    return PacketType.SessionHistory;
                 }
                 else
                 {
