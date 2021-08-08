@@ -216,5 +216,18 @@ namespace Codemasters.F1_2021
 
                 return Packets.ToArray();
         }
+    
+        public static Packet[] GetPacketsFromFrame(Packet[] all, uint frame)
+        {
+            List<Packet> ToReturn = new List<Packet>();
+            foreach (Packet p in all)
+            {
+                if (p.FrameIdentifier == frame)
+                {
+                    ToReturn.Add(p);
+                }
+            }
+            return ToReturn.ToArray();
+        }
     }
 }
