@@ -220,7 +220,9 @@ namespace Codemasters.F1_2021
                     }
                     else if (pt == PacketType.SessionHistory)
                     {
-                        //Session history packet not yet complete
+                        SessionHistoryPacket shp = new SessionHistoryPacket();
+                        shp.LoadBytes(b);
+                        Packets.Add(shp);
                     }
                 }
 
