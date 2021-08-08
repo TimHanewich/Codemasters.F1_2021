@@ -212,6 +212,16 @@ namespace Codemasters.F1_2021
                         fcp.LoadBytes(b);
                         Packets.Add(fcp);
                     }
+                    else if (pt == PacketType.CarDamage)
+                    {
+                        CarDamagePacket cdp = new CarDamagePacket();
+                        cdp.LoadBytes(b);
+                        Packets.Add(cdp);
+                    }
+                    else if (pt == PacketType.SessionHistory)
+                    {
+                        //Session history packet not yet complete
+                    }
                 }
 
                 return Packets.ToArray();
