@@ -214,10 +214,9 @@ namespace Codemasters.F1_2021
 
             //Get the next 20 weather forecast samples
             List<WeatherForecastSample> wfss = new List<WeatherForecastSample>();
-            t = 0;
-            for (t=0;t<20;t++)
+            for (t = 0; t < 56 ;t++)
             {
-                wfss.Add(WeatherForecastSample.Create(BAM.NextBytes(5)));
+                wfss.Add(WeatherForecastSample.Create(BAM.NextBytes(8)));
             }
             WeatherForecastSamples = wfss.ToArray();
 
@@ -228,9 +227,9 @@ namespace Codemasters.F1_2021
             AIDifficulty = BAM.NextByte();
 
             //Get link identifiers
-            SeasonLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
-            WeekendLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
-            SessionLinkIdentifier = Convert.ToUInt32(BAM.NextBytes(4));
+            SeasonLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
+            WeekendLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
+            SessionLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
 
             //Pit stop window parts
             PitStopWindowIdealLap = BAM.NextByte();
