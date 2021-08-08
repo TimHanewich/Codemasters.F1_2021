@@ -84,6 +84,14 @@ namespace Codemasters.F1_2021
             {
                 PacketType = PacketType.LobbyInfo;
             }
+            else if (PackVer == 10)
+            {
+                PacketType = PacketType.CarDamage;
+            }
+            else if (PackVer == 11)
+            {
+                PacketType = PacketType.SessionHistory;
+            }
 
 
             //Get unique session ID
