@@ -34,8 +34,8 @@ namespace Codemasters.F1_2021
         /// </summary>
         public class LapData
         {
-            public float LastLapTime { get; set; }
-            public float CurrentLapTime { get; set; }
+            public uint LastLapTimeMilliseconds { get; set; }
+            public uint CurrentLapTimeMilliseconds { get; set; }
             public ushort Sector1TimeMilliseconds { get; set; }
             public ushort Sector2TimeMilliseconds { get; set; }        
             public float LapDistance { get; set; }
@@ -44,7 +44,8 @@ namespace Codemasters.F1_2021
             public byte CarPosition { get; set; }
             public byte CurrentLapNumber { get; set; }
             public PitStatus CurrentPitStatus { get; set; }
-            public byte Sector { get; set; }
+            public byte NumberOfPitStopsMade {get; set;}
+            public Sector InSector { get; set; }
             public bool CurrentLapInvalid { get; set; }
             public byte Penalties {get; set;}
             public byte Warnings {get; set;} //Number of warnings that have been accumulated
@@ -63,8 +64,8 @@ namespace Codemasters.F1_2021
                 LapData ReturnInstance = new LapData();
                 ByteArrayManager BAM = new ByteArrayManager(bytes);
 
-                ReturnInstance.LastLapTime = BitConverter.ToSingle(BAM.NextBytes(4), 0);
-                ReturnInstance.CurrentLapTime = BitConverter.ToSingle(BAM.NextBytes(4), 0);
+                ReturnInstance.LastLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
+                ReturnInstance.CurrentLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
 
                 ReturnInstance.Sector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
                 ReturnInstance.Sector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
@@ -79,8 +80,23 @@ namespace Codemasters.F1_2021
                 byte nb = BAM.NextByte();
                 ReturnInstance.CurrentPitStatus = (PitStatus)nb;
 
+                //Number of pit stops
+                ReturnInstance.NumberOfPitStopsMade = BAM.NextByte();
+
                 //Get sector
-                ReturnInstance.Sector = System.Convert.ToByte(BAM.NextByte() + 1);
+                nb = BAM.NextByte();
+                if (nb == 0)
+                {
+                    ReturnInstance.InSector = Sector.Sector1;
+                }
+                else if (nb == 1)
+                {
+                    ReturnInstance.InSector = Sector.Sector2;
+                }
+                else if (nb == 2)
+                {
+                    ReturnInstance.InSector = Sector.Sector3;
+                }
 
                 //Get current lap invalid
                 nb = BAM.NextByte();
@@ -112,10 +128,21 @@ namespace Codemasters.F1_2021
                 nb = BAM.NextByte();
                 ReturnInstance.CurrentDriverStatus = (DriverStatus)nb;
 
-
                 //Get result status
                 nb = BAM.NextByte();
                 ReturnInstance.FinalResultStatus = (ResultStatus)nb;
+
+                //Pit lane timer active
+                ReturnInstance.PitLaneTimerActive = Convert.ToBoolean(BAM.NextByte());
+
+                //pit lane timer
+                ReturnInstance.TimeInPitLaneMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
+
+                //Pit stop timer
+                ReturnInstance.PitStopTimerMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
+
+                //Pit stop should serve
+                ReturnInstance.ShouldServePenaltyDuringPitStop = Convert.ToBoolean(BAM.NextByte());
 
                 return ReturnInstance;
             }
@@ -143,6 +170,12 @@ namespace Codemasters.F1_2021
             Retired = 7
         }
 
+        public enum Sector
+        {
+            Sector1 = 0,
+            Sector2 = 1,
+            Sector3 = 2
+        }
 
     }
 
