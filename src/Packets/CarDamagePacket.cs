@@ -51,10 +51,10 @@ namespace Codemasters.F1_2021
 
                 //Tyre wear
                 ToReturn.TyreWear = new WheelDataArray();
-                ToReturn.TyreWear.RearLeft = BitConverter.ToSingle(BAM.NextBytes(4));
-                ToReturn.TyreWear.RearRight = BitConverter.ToSingle(BAM.NextBytes(4));
-                ToReturn.TyreWear.FrontLeft = BitConverter.ToSingle(BAM.NextBytes(4));
-                ToReturn.TyreWear.FrontRight = BitConverter.ToSingle(BAM.NextBytes(4));
+                ToReturn.TyreWear.RearLeft = BitConverter.ToSingle(BAM.NextBytes(4), 0);
+                ToReturn.TyreWear.RearRight = BitConverter.ToSingle(BAM.NextBytes(4), 0);
+                ToReturn.TyreWear.FrontLeft = BitConverter.ToSingle(BAM.NextBytes(4), 0);
+                ToReturn.TyreWear.FrontRight = BitConverter.ToSingle(BAM.NextBytes(4), 0);
 
                 //Tyre Damage
                 ToReturn.TyreDamage = new WheelDataArray();

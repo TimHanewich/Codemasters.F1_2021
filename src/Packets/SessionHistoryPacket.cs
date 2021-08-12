@@ -63,12 +63,12 @@ namespace Codemasters.F1_2021
                 ByteArrayManager BAM = new ByteArrayManager(bytes);
 
                 //Lap time
-                ToReturn.LapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
+                ToReturn.LapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
 
                 //Sector times
-                ToReturn.Sector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
-                ToReturn.Sector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
-                ToReturn.Sector3TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
+                ToReturn.Sector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
+                ToReturn.Sector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
+                ToReturn.Sector3TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
 
                 //Lap valid bit flags
                 ToReturn.LapValidBitFlags = BAM.NextByte();

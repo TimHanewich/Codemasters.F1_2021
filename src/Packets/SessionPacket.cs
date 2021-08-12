@@ -227,9 +227,9 @@ namespace Codemasters.F1_2021
             AIDifficulty = BAM.NextByte();
 
             //Get link identifiers
-            SeasonLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
-            WeekendLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
-            SessionLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4));
+            SeasonLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
+            WeekendLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
+            SessionLinkIdentifier = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
 
             //Pit stop window parts
             PitStopWindowIdealLap = BAM.NextByte();

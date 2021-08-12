@@ -71,7 +71,7 @@ namespace Codemasters.F1_2021
                 ToReturn.FinalResultStatus = (ResultStatus)nb;
 
                 //Best lap time in milliseconds (uint32)
-                ToReturn.BestLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
+                ToReturn.BestLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
 
                 //Total race time in seconds
                 ToReturn.TotalRaceTimeSeconds = BitConverter.ToDouble(BAM.NextBytes(8), 0);

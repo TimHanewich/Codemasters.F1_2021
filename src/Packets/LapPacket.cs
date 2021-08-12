@@ -64,8 +64,8 @@ namespace Codemasters.F1_2021
                 LapData ReturnInstance = new LapData();
                 ByteArrayManager BAM = new ByteArrayManager(bytes);
 
-                ReturnInstance.LastLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
-                ReturnInstance.CurrentLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4));
+                ReturnInstance.LastLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
+                ReturnInstance.CurrentLapTimeMilliseconds = BitConverter.ToUInt32(BAM.NextBytes(4), 0);
 
                 ReturnInstance.Sector1TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
                 ReturnInstance.Sector2TimeMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
@@ -136,10 +136,10 @@ namespace Codemasters.F1_2021
                 ReturnInstance.PitLaneTimerActive = Convert.ToBoolean(BAM.NextByte());
 
                 //pit lane timer
-                ReturnInstance.TimeInPitLaneMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
+                ReturnInstance.TimeInPitLaneMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
 
                 //Pit stop timer
-                ReturnInstance.PitStopTimerMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2));
+                ReturnInstance.PitStopTimerMilliseconds = BitConverter.ToUInt16(BAM.NextBytes(2), 0);
 
                 //Pit stop should serve
                 ReturnInstance.ShouldServePenaltyDuringPitStop = Convert.ToBoolean(BAM.NextByte());
