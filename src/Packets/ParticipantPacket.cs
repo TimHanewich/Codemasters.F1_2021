@@ -45,15 +45,7 @@ namespace Codemasters.F1_2021
 
                 //Get AI controlled
                 byte nb = BAM.NextByte();
-                if (nb == 0)
-                {
-                    ReturnInstance.IsAiControlled = false;
-                }
-                else if (nb == 1)
-                {
-                    ReturnInstance.IsAiControlled = true;
-                }
-
+                ReturnInstance.IsAiControlled = nb == 1 ? true : false;
 
                 //Get piloting driver
                 ReturnInstance.PilotingDriver = CodemastersToolkit.GetDriverFromDriverId(BAM.NextByte());
@@ -63,6 +55,10 @@ namespace Codemasters.F1_2021
 
                 //Get Team
                 ReturnInstance.ManufacturingTeam = CodemastersToolkit.GetTeamFromTeamId(BAM.NextByte());
+
+                //My Team
+                byte mt = BAM.NextByte();
+                ReturnInstance.MyTeam = mt == 1 ? true : false;
 
                 //Get race number
                 ReturnInstance.CarRaceNumber = BAM.NextByte();
