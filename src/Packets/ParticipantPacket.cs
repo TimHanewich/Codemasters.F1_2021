@@ -30,9 +30,9 @@ namespace Codemasters.F1_2021
         {
             public bool IsAiControlled { get; set; }
             public Driver PilotingDriver { get; set; }
-            public byte NetworkId {get; set;} //New to F1 2021
+            public byte NetworkId { get; set; } //New to F1 2021
             public Team ManufacturingTeam { get; set; }
-            public bool MyTeam {get; set;} //New to F1 2021. Indicates if it is their own team
+            public bool MyTeam { get; set; } //New to F1 2021. Indicates if it is their own team
             public byte CarRaceNumber { get; set; }
             public byte NationalityId { get; set; } //I'm too lazy to do this right now.  Will leave it as a byte ID for now... -Tim 1/26/2020
             public string Name { get; set; }
@@ -67,13 +67,7 @@ namespace Codemasters.F1_2021
                 ReturnInstance.NationalityId = BAM.NextByte();
 
                 //Get name
-                string FullName = "";
-                int t = 1;
-                for (t = 1; t <= 48; t++)
-                {
-                    char ThisChar = Convert.ToChar(BAM.NextByte());
-                    FullName = FullName + ThisChar.ToString();
-                }
+                string FullName = System.Text.Encoding.UTF8.GetString(BAM.NextBytes(48));
                 ReturnInstance.Name = FullName.Trim();
 
                 //Get telemetry private or not.
