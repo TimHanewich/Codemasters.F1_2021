@@ -28,14 +28,14 @@ namespace Codemasters.F1_2021
             LobbyPlayers = ToAdd.ToArray();
 
         }
-        
+
         public class LobbyInfoData
         {
             public bool AiControlled { get; set; }
             public Team TeamId { get; set; }
             public byte Nationality { get; set; }
             public string Name { get; set; }
-            public byte CarNumber {get; set;}
+            public byte CarNumber { get; set; }
             public ReadyStatus ReadyStatus { get; set; }
 
             public static LobbyInfoData Create(byte[] bytes)
@@ -54,11 +54,7 @@ namespace Codemasters.F1_2021
                 ToReturn.Nationality = BAM.NextByte();
 
                 //name
-                for (var t = 1; t <= 48; t++)
-                {
-                    var currentChar = Convert.ToChar(BAM.NextByte());
-                    ToReturn.Name += currentChar.ToString();
-                }
+                ToReturn.Name = System.Text.Encoding.UTF8.GetString(BAM.NextBytes(48)).Trim();
 
                 //Car number
                 ToReturn.CarNumber = BAM.NextByte();
@@ -76,7 +72,7 @@ namespace Codemasters.F1_2021
             Ready = 1,
             Spectating = 2
         }
-     
+
     }
 
 }
